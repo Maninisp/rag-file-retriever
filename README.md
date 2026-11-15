@@ -34,6 +34,12 @@ Search using natural language:
 ```bash
 python semantic_search.py
 ```
+## Demo — Semantic File Retrieval
+
+Find relevant files using natural-language descriptions,
+even when the query doesn't match their filenames.
+
+![Semantic Search Demo](screenshots/semantic-search-demo.png)
 
 ## Current Scope
 

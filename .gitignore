@@ -18,3 +18,6 @@ data/*.npy
 .vscode/
 .idea/
 .DS_Store
+
+# Temporary testing notebooks
+test.ipynb
