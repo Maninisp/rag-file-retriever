@@ -1,0 +1,2 @@
+Build an AI-powered file retrieval system that searches
+local computer files using natural language queries.

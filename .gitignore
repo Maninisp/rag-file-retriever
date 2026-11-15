@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+file_retriever/
+*.pyc
+
+
+# Local database and generated indexes
+data/*.db
+data/*.index
+data/*.npy
+
+# Editor and system files
+.vscode/
+.idea/
+.DS_Store
