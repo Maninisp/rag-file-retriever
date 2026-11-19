@@ -2,8 +2,8 @@ import sqlite3
 import numpy as np
 import faiss            # vector similarity search linrary-> stores vectors in a searchable index n find similar vectors
 
-from database import DB_PATH
-from embeddings import generate_embedding
+from .database import DB_PATH, BASE_DIR
+from .embeddings import generate_embedding
 
 def build_index():
     with sqlite3.connect(DB_PATH) as conn:
@@ -15,9 +15,10 @@ def build_index():
         """).fetchall()
 
     if not files:
-        print("No files available for indexing.")
-        return
-
+        raise ValueError(
+        "No searchable files found. Add supported text files before indexing."
+        )
+        
     embeddings = []
     file_ids = []
 
@@ -36,8 +37,8 @@ def build_index():
     index = faiss.IndexFlatIP(vectors.shape[1])
     index.add(vectors)
 
-    faiss.write_index(index, "data/files.index")
-    np.save("data/file_ids.npy", np.array(file_ids))
+    faiss.write_index(index, str(BASE_DIR/"data"/"files.index"))
+    np.save(BASE_DIR/"data"/"file_ids.npy", np.array(file_ids))
 
     print(f"Indexed {index.ntotal} files.")
 

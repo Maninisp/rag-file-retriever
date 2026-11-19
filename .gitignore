@@ -21,3 +21,5 @@ data/*.npy
 
 # Temporary testing notebooks
 test.ipynb
+
+import_times.txt
