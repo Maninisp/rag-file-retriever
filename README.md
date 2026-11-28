@@ -134,7 +134,7 @@ Retrieves files using natural-language queries and displays project-grouped resu
 
 ## Current Limitations
 
-- Each searchable file is embedded as a whole; chunking is not yet implemented.
+- FileRetriever generates one embedding per file using all-MiniLM-L6-v2, which processes a maximum of 256 tokens per input. Content beyond this limit is truncated and may not influence retrieval. Document chunking is planned for Phase 3.
 - Indexing rebuilds embeddings for all searchable database records.
 - The embedding model is reloaded for each separate CLI invocation.
 - Retrieval currently uses semantic similarity only.

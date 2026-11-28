@@ -44,19 +44,12 @@ def main():
             parser.error("Search query cannot be empty")
 
         try:
-            results = semantic_search(args.value, top_k=5)
+            results = semantic_search(query, top_k=5)
         except (FileNotFoundError, ValueError) as e:
             parser.error(str(e))
 
         projects = group_by_project(results)
 
-        # for project in projects:
-        #     print(f"\nProject: {project['project_name']}")
-        #     print(f"Location: {project['project_path']}")
-        #     print(f"Cosine Similarity: {project['score']:.4f}")
-
-        #     for file in project["files"]:
-        #         print(f" -{file['name']}")
         console = Console()
 
         table = Table(title="FileRetriever — Search Results")

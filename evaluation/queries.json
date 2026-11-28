@@ -1,0 +1,38 @@
+[
+  {
+    "query": "Find the veterinary clinic management application",
+    "expected_files": [
+      "project_alpha/README.md",
+      "project_alpha/app.py"
+    ]
+  },
+  {
+    "query": "Which file implements pet appointments?",
+    "expected_files": [
+      "project_alpha/app.py"
+    ]
+  },
+  {
+    "query": "Find the employee support ticketing system",
+    "expected_files": [
+      "project_beta/README.md",
+      "project_beta/app.py"
+    ]
+  },
+  {
+    "query": "Where are employee support tickets handled?",
+    "expected_files": [
+      "project_beta/app.py"
+    ]
+  },
+  {
+    "query": "Find ideas for an AI-powered local file search system",
+    "expected_files": [
+      "notes/ideas.txt"
+    ]
+  },
+  {
+    "query": "Find information about income tax calculation",
+    "expected_files": []
+  }
+]

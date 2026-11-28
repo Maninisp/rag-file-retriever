@@ -10,9 +10,9 @@ file_retriever/
 
 
 # Local database and generated indexes
-data/*.db
-data/*.index
-data/*.npy
+*.db
+*.index
+*.npy
 
 # Editor and system files
 .vscode/

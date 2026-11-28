@@ -1,7 +1,17 @@
+import os
 from pathlib import Path
 
-# from .database import create_database, save_file, BASE_DIR
 from .database import save_file
+
+IGNORED_DIRS = {
+    ".git",
+    "node_modules",
+    "__pycache__",
+    ".pytest_cache",
+    ".idea",
+}
+
+MAX_FILE_SIZE_MB = 10  # Set to None to disable
 
 def extract_content(path):
     allowed_extensions = {'.txt', '.md', '.py', '.json', '.csv'}
@@ -31,23 +41,35 @@ def scan_folder(folder_path):
 
     file_count = 0
 
-    for path in folder.rglob('*'):
-        if path.is_file():
+    for current_dir, dirs, files in os.walk(folder):
+        # Skip generated directories and Python virtual environments
+        dirs[:] = [
+            d for d in dirs
+            if d not in IGNORED_DIRS
+            and not (Path(current_dir) / d / "pyvenv.cfg").is_file()
+        ]
+
+        for filename in files:
+            path = Path(current_dir) / filename
+            file_size = path.stat().st_size
+
+            if MAX_FILE_SIZE_MB is not None:
+                if file_size > MAX_FILE_SIZE_MB * 1024 * 1024:
+                    print(f"Skipped (too large): {path.name}")
+                    continue
+
             file_count += 1
 
             save_file(
-                name= path.name,
-                # path= str(path),                  #'path': 'test_data\\index.db'
-                path= str(path.resolve()),        # gets the absolute path
-                extension= path.suffix,
-                size= path.stat().st_size,
-                content= extract_content(path)
+                name=path.name,
+                path=str(path.resolve()),
+                extension=path.suffix,
+                size=file_size,
+                content=extract_content(path)
             )
+
             print(f"Indexed: {path.name}")
 
     if file_count == 0:
         raise ValueError("The selected folder contains no files.")
 
-# if __name__ == "__main__":
-#     create_database()
-#     scan_folder(BASE_DIR/"test_data")

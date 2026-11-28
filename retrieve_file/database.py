@@ -1,8 +1,7 @@
 import sqlite3
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-DB_PATH = BASE_DIR/"data"/"index.db"
+from .config import DB_PATH
 
 def create_database():
     """
@@ -28,6 +27,24 @@ def create_database():
         
         if "content" not in columns:
             conn.execute("ALTER TABLE files ADD COLUMN content TEXT")
+
+        # Create FTS5 virtual table
+        conn.execute("""
+            CREATE VIRTUAL TABLE IF NOT EXISTS files_fts
+            USING fts5(
+                name,
+                content,
+                content='files',
+                content_rowid='id'
+            )
+        """)
+        # to check whether files_fts is created or not - test block
+        # tables = conn.execute("""
+        #     SELECT name FROM sqlite_master
+        #     WHERE type = 'table'
+        # """).fetchall()
+
+        # print(tables)
 
 def save_file(name, path, extension, size, content):
     with sqlite3.connect(DB_PATH) as conn:
